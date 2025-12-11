@@ -15,7 +15,7 @@ const authUser = async (req, res, next) => {
     req.user = decoded.userId;
     next();
   } catch (error) {
-    console.log("error", error);
+    throw new AuthFailureError("Vui lòng đăng nhập lại");
   }
 };
 module.exports = { authUser };

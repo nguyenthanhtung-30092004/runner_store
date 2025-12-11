@@ -2,6 +2,7 @@ const { createAccessToken, createRefreshToken } = require("../auth/checkAuth");
 const {
   ConflictRequestError,
   BadRequestError,
+  NotFoundError,
 } = require("../core/error.response");
 const { Created, OK } = require("../core/success.response");
 const userModel = require("../models/user.model");
@@ -112,6 +113,22 @@ class UsersController {
     }
     return new OK({
       message: "Xác thực thành công",
+      metadata: findUser,
+    }).send(res);
+  }
+
+  async logout(req, res) {
+    const userId = req.user;
+    const findUser = await userModel.findById(userId);
+    if (!findUser) {
+      throw new NotFoundError("Người dùng không tồn tại");
+    }
+    res.clearCookie("accessToken");
+    res.clearCookie("refreshToken");
+    res.clearCookie("logged");
+
+    return new OK({
+      message: "Đăng xuất thành công",
       metadata: findUser,
     }).send(res);
   }
