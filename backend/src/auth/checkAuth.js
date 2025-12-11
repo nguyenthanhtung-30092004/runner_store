@@ -20,4 +20,14 @@ const createRefreshToken = (payload) => {
   });
 };
 
-module.exports = { asyncHandler, createAccessToken, createRefreshToken };
+const verifyToken = async (token) => {
+  const decoded = await jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+  return decoded;
+};
+
+module.exports = {
+  asyncHandler,
+  createAccessToken,
+  createRefreshToken,
+  verifyToken,
+};

@@ -104,6 +104,17 @@ class UsersController {
       metadata: { accessToken, refreshToken },
     }).send(res);
   }
+  async authUser(req, res) {
+    const userId = req.user;
+    const findUser = await userModel.findById(userId);
+    if (!findUser) {
+      throw new BadRequestError("Người dùng không tồn tại");
+    }
+    return new OK({
+      message: "Xác thực thành công",
+      metadata: findUser,
+    }).send(res);
+  }
 }
 
 module.exports = new UsersController();
