@@ -5,6 +5,8 @@ const Schema = mongoose.Schema;
 const brandModel = new Schema(
   {
     name: { type: String, required: true },
+    imageBrand: { type: String, required: true },
+    imagePublicId: { type: String, required: true },
   },
   { timestamps: true }
 );
