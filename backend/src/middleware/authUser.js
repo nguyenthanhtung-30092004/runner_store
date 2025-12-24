@@ -31,7 +31,6 @@ const authAdmin = async (req, res, next) => {
       throw new AuthFailureError("Vui lòng đăng nhập lại");
     }
     const findUser = await userModel.findById(decoded.userId);
-    console.log("findUser", findUser);
     if (!findUser) {
       throw new AuthFailureError("Người dùng không tồn tại");
     }
@@ -40,7 +39,7 @@ const authAdmin = async (req, res, next) => {
     }
     next();
   } catch (error) {
-    console.log("error", error);
+    throw new AuthFailureError("Vui lòng đăng nhập lại");
   }
 };
 module.exports = { authUser, authAdmin };
