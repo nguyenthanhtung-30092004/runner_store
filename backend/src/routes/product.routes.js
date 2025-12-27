@@ -30,6 +30,11 @@ router.get(
   authAdmin,
   asyncHandler(productsController.getAllProducts)
 );
+router.get(
+  "/getProductBySlug/:slug",
+  authAdmin,
+  asyncHandler(productsController.getProductBySlug)
+);
 router.put(
   "/update/:slug",
   authAdmin,

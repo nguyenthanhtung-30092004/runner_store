@@ -1,10 +1,10 @@
 const { BadRequestError } = require("../core/error.response");
-const { Created } = require("../core/success.response");
+const { Created, OK } = require("../core/success.response");
 const productModel = require("../models/product.model");
 const cloudinary = require("../config/cloudDinary");
 const slugify = require("../utils/slugify");
 const fs = require("fs/promises");
-const { OK } = require("../core/statusCodes");
+
 class ProductController {
   async createProduct(req, res) {
     let uploadedPublicIds = [];
@@ -89,6 +89,22 @@ class ProductController {
         message: "Lấy tất cả sản phẩm thành công",
         metadata: products,
       });
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+  async getProductBySlug(req, res) {
+    try {
+      const { slug } = req.params;
+      const product = await productModel.findOne({ slugProduct: slug });
+      if (!product) {
+        throw new BadRequestError("Sản phẩm không tồn tại");
+      }
+      return new OK({
+        message: "Lấy sản phẩm thành công",
+        metadata: product,
+      }).send(res);
     } catch (error) {
       console.log(error);
       throw error;

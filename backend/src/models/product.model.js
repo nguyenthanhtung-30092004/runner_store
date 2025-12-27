@@ -20,7 +20,7 @@ const productModel = new Schema(
     nameProduct: { type: String, required: true },
     priceProduct: { type: Number, required: true, min: 0 },
     slugProduct: { type: String, required: true },
-    description: { type: String, require: true },
+    description: { type: String, required: true },
     imagesProduct: [{ type: String, required: true }],
     imagePublicIds: [{ type: String, required: true }],
     categoryProduct: {
